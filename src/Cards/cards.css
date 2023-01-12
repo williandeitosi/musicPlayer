@@ -1,0 +1,37 @@
+#app * {
+    border: 1px solid red;
+}
+
+#app {
+    display: grid;
+    grid-template-areas: 
+    "a b"
+    "a c";
+
+    gap: 32px;
+    color: #fff;
+    
+
+}
+
+#player-1 {
+    grid-area: a;
+    padding: 50px 38px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+   
+}
+
+#player-2 {
+    grid-area: b;
+}
+
+#player-3 {
+    grid-area: c;
+}
+
+.player {
+    background-color: #2A2141;
+}
