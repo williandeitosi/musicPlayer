@@ -1,10 +1,11 @@
 import "./cards.css";
-import hans from "../assets/hans.png";
+import { PlayMusic, PauseMusic } from "../PlayMusic/PlayMusic";
 import play from "../assets/play.png";
 import back from "../assets/play-back.png";
 import next from "../assets/play-forward.png";
+import music from "../assets/music/music.mp3";
 
-export default function Cards() {
+function Cards() {
   return (
     <div id="app">
       <div id="player-1" className="player">
@@ -16,13 +17,16 @@ export default function Cards() {
           />
 
           <div className="info">
-            <h1>Acorda Devinho</h1>
-            <p>Banda Rocketseat</p>
+            <h1>Emotional Mess</h1>
+            <p>Amy Lynn & the Honey Men</p>
           </div>
 
+          <audio id="music" src={music}></audio>
+
           <div className="controls">
-            <img src={back} alt="" />
-            <img src={play} alt="" />
+            <img onClick={PauseMusic} src={back} alt="" />{" "}
+            {/* apenas para testar o pause */}
+            <img onClick={PlayMusic} src={play} alt="" />
             <img src={next} alt="" />
           </div>
 
@@ -46,8 +50,8 @@ export default function Cards() {
               alt="img abstract"
             />
             <div className="info">
-              <h1>Acorda Devinho</h1>
-              <p>Banda Rocketseat</p>
+              <h1>Emotional Mess</h1>
+              <p>Amy Lynn & the Honey Men</p>
             </div>
           </div>
 
@@ -77,8 +81,8 @@ export default function Cards() {
               alt="img abstract"
             />
             <div className="info">
-              <h1>Acorda Devinho</h1>
-              <p>Banda Rocketseat</p>
+              <h1>Emotional Mess</h1>
+              <p>Amy Lynn & the Honey Men</p>
             </div>
           </div>
           <div className="controls-mini">
@@ -91,3 +95,5 @@ export default function Cards() {
     </div>
   );
 }
+
+export { Cards };
