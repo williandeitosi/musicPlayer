@@ -1,9 +1,18 @@
 import "./cards.css";
-import { PlayMusic, PauseMusic } from "../PlayMusic/PlayMusic";
 import play from "../assets/play.png";
+import pause from "../assets/pause.png";
 import back from "../assets/play-back.png";
 import next from "../assets/play-forward.png";
 import music from "../assets/music/music.mp3";
+
+function PlayMusic() {
+  let music = document.getElementById("music");
+  music.play();
+}
+function PauseMusic() {
+  let music = document.getElementById("music");
+  music.pause();
+}
 
 function Cards() {
   return (
@@ -24,7 +33,7 @@ function Cards() {
           <audio id="music" src={music}></audio>
 
           <div className="controls">
-            <img onClick={PauseMusic} src={back} alt="" />{" "}
+            <img onClick={PauseMusic} src={back} alt="" />
             {/* apenas para testar o pause */}
             <img onClick={PlayMusic} src={play} alt="" />
             <img src={next} alt="" />
@@ -57,7 +66,7 @@ function Cards() {
 
           <div className="controls-mini">
             <img src={back} alt="" />
-            <img src={play} alt="" />
+            <img src={pause} alt="" />
             <img src={next} alt="" />
           </div>
 
