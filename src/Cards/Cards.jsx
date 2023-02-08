@@ -4,17 +4,70 @@ import pause from "../assets/pause.png";
 import back from "../assets/play-back.png";
 import next from "../assets/play-forward.png";
 import music from "../assets/music/music.mp3";
-
-function PlayMusic() {
-  let music = document.getElementById("music");
-  music.play();
-}
-function PauseMusic() {
-  let music = document.getElementById("music");
-  music.pause();
-}
+import { useState } from "react";
 
 function Cards() {
+  const [imagem, setimagem] = useState(play);
+  // criei uma variável iniciando com null
+  let interval = null;
+  const [totalTime, setTotalTime] = useState("03:40");
+  const [musicDuration, setMusicDuration] = useState("00:00");
+
+  function segundosParaMinutos(segundos) {
+    let campoMinutos = Math.floor(segundos / 60);
+    let campoSegundos = segundos % 60;
+
+    if (campoSegundos < 10) {
+      campoSegundos = "0" + campoSegundos;
+    }
+    return campoMinutos + ":" + campoSegundos;
+  }
+
+  function progressBar() {
+    let tracker = document.getElementById("trackers");
+    let tracker2 = document.getElementById("trackers2");
+    // pego o elemento audio...
+    const music = document.getElementById("music");
+
+    setTotalTime(segundosParaMinutos(Math.floor(music.duration)));
+
+    setInterval(() => {
+      setMusicDuration(segundosParaMinutos(Math.floor(music.currentTime)));
+    }, 100);
+
+    // verifico se a variável é null
+    // se for é porque estamos iniciando o audio dando play
+    // então quero q a barra comece a ser repetida
+    if (interval == null) {
+      interval = setInterval(() => {
+        let meuCalculoFormatado =
+          Math.floor((music.currentTime / music.duration) * 100) + "%";
+
+        tracker.style.width = meuCalculoFormatado;
+
+        tracker2.style.width = meuCalculoFormatado;
+      }, 100);
+
+      console.log(music.currentTime);
+      console.log(music.duration);
+    } else {
+      // caso não seja null eu quero remover o interval
+      // sinal que dei pause então não quero que a barra aumente
+      clearInterval(interval);
+    }
+  }
+
+  function changeImg() {
+    progressBar();
+    const music = document.getElementById("music");
+    setimagem((img) => (img === play ? pause : play));
+
+    // let tempoDecorrido = document.getElementsByClassName("last-time");
+    // tempoDecorrido.textContent = music.currentTime;
+
+    return music.paused ? music.play() : music.pause();
+  }
+
   return (
     <div id="app">
       <div id="player-1" className="player">
@@ -33,18 +86,18 @@ function Cards() {
           <audio id="music" src={music}></audio>
 
           <div className="controls">
-            <img onClick={PauseMusic} src={back} alt="" />
-            {/* apenas para testar o pause */}
-            <img onClick={PlayMusic} src={play} alt="" />
-            <img src={next} alt="" />
+            <img src={back} alt="back" />
+            <img onClick={changeImg} src={imagem} alt="Play and Pause" />
+            <img src={next} alt="next" />
           </div>
 
           <div className="track-time">
             <div className="tracker"></div>
+            <div id="trackers" className="trackers tracker-att"></div>
 
             <div className="timer">
-              <div className="total-time">03:20</div>
-              <div className="last-time">00:12</div>
+              <div className="last-time">{musicDuration}</div>
+              <div className="total-time">{totalTime}</div>
             </div>
           </div>
         </div>
@@ -65,17 +118,18 @@ function Cards() {
           </div>
 
           <div className="controls-mini">
-            <img src={back} alt="" />
-            <img src={pause} alt="" />
-            <img src={next} alt="" />
+            <img src={back} alt="back" />
+            <img onClick={changeImg} src={imagem} alt="Play and Pause" />
+            <img src={next} alt="next" />
           </div>
 
           <div className="track-time">
-            <div className="tracker"></div>
+            <div className="tracker-2"></div>
+            <div id="trackers2" className="tracker-att"></div>
 
             <div className="timer">
-              <div className="total-time">03:20</div>
-              <div className="last-time">00:12</div>
+              <div className="last-time">{musicDuration}</div>
+              <div className="total-time">{totalTime}</div>
             </div>
           </div>
         </div>
@@ -96,7 +150,7 @@ function Cards() {
           </div>
           <div className="controls-mini">
             <img src={back} alt="" />
-            <img src={play} alt="" />
+            <img onClick={changeImg} src={imagem} alt="" />
             <img src={next} alt="" />
           </div>
         </div>
